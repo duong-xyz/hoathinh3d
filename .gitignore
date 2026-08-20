@@ -1,0 +1,72 @@
+# Bỏ qua tất cả các file nén zip
+*.zip
+
+# Bỏ qua tất cả các tài liệu định dạng PDF
+*.pdf
+
+# ==========================================
+# 2. Cấu hình cho ReactJS (Frontend)
+# ==========================================
+# Các thư viện đã tải về
+node_modules/
+/jspm_packages
+
+# Thư mục build sản phẩm đầu ra
+/build
+/dist
+/out
+
+# File log khi chạy app lỗi
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# File cấu hình môi trường chứa mật khẩu, API key (QUAN TRỌNG)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ==========================================
+# 3. Cấu hình cho Java Spring Boot (Backend)
+# ==========================================
+# Thư mục build đầu ra của Maven và Gradle
+target/
+!.mvn/wrapper/maven-wrapper.jar
+build/
+/out/
+
+# File log của Spring Application
+*.log
+
+# Cấu hình cơ sở dữ liệu tạm thời hoặc file lưu dữ liệu H2
+.h2.db
+
+# ==========================================
+# 4. Cấu hình cho các IDE / Code Editor
+# ==========================================
+# VS Code
+.vscode/
+!.vscode/extensions.json
+.factorypath
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse
+.metadata
+.classpath
+.project
+.settings/
+
+# ==========================================
+# 5. File rác của hệ điều hành
+# ==========================================
+.DS_Store
+Thumbs.db
