@@ -32,9 +32,13 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -50,11 +54,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
+        http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/v1/movies/**", "/api/v1/episodes/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/movies/**", "/api/v1/episodes/**","/api/v1/comments/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 //Enable the OAuth2 Resource Server to automatically intercept and decode the Bearer Token
@@ -93,6 +99,27 @@ public class SecurityConfig {
         JWK jwk = new RSAKey.Builder(this.publicKey).privateKey(this.privateKey).build();
         JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        // Cho phép tất cả các Origin
+        configuration.setAllowedOriginPatterns(List.of("*"));
+
+        // Cho phép tất cả các HTTP Methods (GET, POST, PUT, DELETE, OPTIONS,...)
+        configuration.setAllowedMethods(List.of("*"));
+
+        // Cho phép tất cả các Headers
+        configuration.setAllowedHeaders(List.of("*"));
+
+        // Cho phép gửi kèm Credentials
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     /*@Bean //The converter removes the default "SCOPE_" prefix, allowing direct use of hasRole('ADMIN')

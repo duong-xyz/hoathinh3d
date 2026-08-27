@@ -1,12 +1,13 @@
 package com.duonghd.app.model;
 
 import com.duonghd.app.contant.MovieType;
+import com.duonghd.app.util.ScheduleUtils;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "movies")
@@ -21,6 +22,7 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     private MovieType type;
     @Column(name = "rating_score", precision = 3, scale = 1)
+    @Builder.Default
     private BigDecimal ratingScore = BigDecimal.ZERO;
     @Column(name = "thumbnail_url", length = 500)
     private String thumbnailUrl;
@@ -30,5 +32,12 @@ public class Movie {
     private String description;
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<Episode> episodes = new ArrayList<>();
+    private Set<Episode> episodes = new LinkedHashSet<>();
+
+    public boolean hasScheduleAt(String targetDay, boolean isEarly) {
+        return ScheduleUtils.checkSchedule(this.schedule, targetDay, isEarly);
+    }
+    public String getBroadcastTime() {
+        return ScheduleUtils.getTime(this.schedule);
+    }
 }

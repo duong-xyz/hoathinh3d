@@ -2,10 +2,7 @@ package com.duonghd.app.service;
 
 import com.duonghd.app.dto.request.MovieCreateRequest;
 import com.duonghd.app.dto.request.MovieUpdateRequest;
-import com.duonghd.app.dto.response.MovieDetailResponseAdDto;
-import com.duonghd.app.dto.response.MovieDetailResponseDto;
-import com.duonghd.app.dto.response.MovieResponseDto;
-import com.duonghd.app.dto.response.WatchEpisodeResponseDto;
+import com.duonghd.app.dto.response.*;
 import com.duonghd.app.model.Movie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,4 +27,8 @@ public interface MovieService {
 
     @Transactional
     MovieResponseDto updateMovie(Long id, MovieUpdateRequest request);
+
+    Page<MovieResponseDto> searchMovies(String keyword, Pageable pageable);
+
+    ScheduleResponse getScheduleByDay(String day, Pageable pageable);
 }

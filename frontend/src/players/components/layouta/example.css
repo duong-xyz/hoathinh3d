@@ -1,0 +1,1373 @@
+.media-slider {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  position: relative;
+  contain: layout style;
+  outline: none;
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  max-width: 72px;
+  /** Prevent thumb flowing out of slider (15px = thumb width). */
+  margin: 0 calc(15px / 2);
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.media-slider[data-focus] .media-slider-track {
+  box-shadow: var(--media-focus-ring, 0 0 0 3px rgb(78 156 246));
+}
+
+.media-slider-track {
+  z-index: 0;
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  top: 50%;
+  left: 0;
+  border-radius: 1px;
+  transform: translateY(-50%) translateZ(0);
+  background-color: rgb(255 255 255 / 0.3);
+  contain: strict;
+}
+
+.media-slider-track-fill {
+  z-index: 2;
+  /** above progress. */
+  background-color: #ea333e;
+  width: var(--slider-fill, 0%);
+  will-change: width;
+}
+
+.media-slider-progress {
+  z-index: 1;
+  /** above track. */
+  width: var(--slider-progress, 0%);
+  will-change: width;
+  background-color: rgb(255 255 255 / 0.5);
+}
+
+.media-slider-thumb {
+  position: absolute;
+  top: 50%;
+  left: var(--slider-fill);
+  opacity: 0;
+  contain: layout size style;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #ea333e;
+  border-radius: 9999px;
+  background-color: #ea333e;
+  transform: translate(-50%, -50%) translateZ(0);
+  transition: opacity 0.15s ease-in;
+  pointer-events: none;
+  will-change: left;
+  z-index: 2;
+  /** above track fill. */
+}
+
+.media-slider[data-active] .media-slider-thumb {
+  opacity: 1;
+  transition: opacity 0.2s ease-in;
+}
+
+.media-slider[data-dragging] .media-slider-thumb {
+  box-shadow: 0 0 0 3px hsla(0, 0%, 100%, 0.4);
+}
+
+.media-slider-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  border-radius: 2px;
+  pointer-events: none;
+  transition: opacity 0.2s ease-out;
+  will-change: left, opacity;
+  contain: layout paint style;
+}
+
+.media-slider-preview[data-visible] {
+  opacity: 1;
+  transition: opacity 0.2s ease-in;
+}
+
+.media-slider-thumbnail {
+  display: block;
+  width: var(--thumbnail-width);
+  height: var(--thumbnail-height);
+  background-color: black;
+  border: 1px solid white;
+  contain: strict;
+  overflow: hidden;
+  min-width: 120px;
+  min-height: 80px;
+  max-width: 180px;
+  max-height: 160px;
+}
+
+.media-slider-value {
+  padding: 1px 10px;
+  color: white;
+  background-color: black;
+  border-radius: 2px;
+}
+
+
+
+
+
+
+.media-button {
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 54px !important;
+  height: 36px !important;
+  color: white;
+  border-radius: 8px;
+  margin-right: 2.5px;
+  cursor: pointer;
+  /* Browser resets. */
+  padding: 0;
+  user-select: none;
+  appearance: none;
+  background: none;
+  outline: none;
+  border: none;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.media-button>svg {
+  width: 80%;
+  height: 80%;
+  border-radius: 2px;
+}
+
+.media-button[data-focus]>svg {
+  box-shadow: var(--media-focus-ring, 0 0 0 3px rgb(78 156 246));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .media-button:hover {
+    background-color: rgb(255 255 255 / 0.2);
+  }
+}
+
+.media-button:not([data-muted]) .mute-icon,
+.media-button:not([data-state='low']) .volume-low-icon,
+.media-button:not([data-state='high']) .volume-high-icon {
+  display: none;
+}
+
+
+
+
+
+
+.media-time-group {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.media-time {
+  display: inline-block;
+  contain: content;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+}
+
+.media-time-divider {
+  margin: 0 2.5px;
+  color: #e0e0e0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* menu */
+.media-menu {
+  --enter-transform: translateY(0px);
+  --exit-transform: translateY(12px);
+
+  display: flex;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: sans-serif;
+  flex-direction: column;
+  transition: height 0.35s ease;
+  min-width: 260px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background-color: rgb(10 10 10 / 0.95);
+  backdrop-filter: blur(4px);
+  height: var(--menu-height, auto);
+  will-change: width, height;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  max-height: 250px;
+}
+
+.media-menu[data-transition] {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.media-menu:not([data-open]) {
+  animation: media-menu-exit 0.2s ease-out;
+}
+
+.media-menu[data-open] {
+  animation: media-menu-enter 0.3s ease-out;
+  animation-fill-mode: forwards;
+}
+
+.media-menu[data-placement~='bottom'] {
+  --enter-transform: translateY(0);
+  --exit-transform: translateY(-12px);
+}
+
+.media-menu :global([role='menuitem'][data-focus]),
+.media-menu :global([role='menuitemradio'][data-focus]) {
+  outline: none;
+  box-shadow: var(--media-focus-ring);
+}
+
+@keyframes media-menu-enter {
+  from {
+    opacity: 0;
+    transform: var(--exit-transform);
+  }
+
+  to {
+    opacity: 1;
+    transform: var(--enter-transform);
+  }
+}
+
+@keyframes media-menu-exit {
+  from {
+    opacity: 1;
+    transform: var(--enter-transform);
+  }
+
+  to {
+    opacity: 0;
+    transform: var(--exit-transform);
+  }
+}
+
+/* Other buttons use the same styles (e..g, `PlayButton`). */
+.media-button {
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  color: white;
+  border-radius: 8px;
+  margin-right: 2.5px;
+  cursor: pointer;
+  /* Browser resets. */
+  padding: 0;
+  user-select: none;
+  appearance: none;
+  background: none;
+  outline: none;
+  border: none;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.media-button>svg {
+  width: 80%;
+  height: 80%;
+  border-radius: 2px;
+}
+
+.media-button[data-focus]>svg {
+  box-shadow: var(--media-focus-ring, 0 0 0 3px rgb(78 156 246));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .media-button:hover {
+    background-color: rgb(255 255 255 / 0.2);
+  }
+}
+
+.media-rotate-icon {
+  transition: transform 0.2s ease-out;
+}
+
+.media-button[aria-expanded='true'] .media-rotate-icon {
+  transform: rotate(90deg);
+  transition: transform 0.2s ease-in;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.media-player {
+  /* Player CSS variables (defaults shown). */
+  --media-font-family: sans-serif;
+  --media-controls-color: #f5f5f5;
+  --media-focus-ring: 0 0 0 3px rgb(78 156 246);
+}
+
+.vds-menu {
+  /* CSS variables available for customization (defaults shown). */
+
+  --media-menu-bg: var(--media-menu-bg, var(--color-gray-400));
+  --media-menu-border-radius: 4px;
+  --media-menu-border: 1px solid rgb(255 255 255 / 0.1);
+  --media-menu-box-shadow: 1px 1px 1px rgb(10 10 10 / 0.5);
+  --media-menu-divider: 1px solid var(--color-gray-50);
+  --media-menu-font-size: 14px;
+  --media-menu-font-weight: 500;
+  --media-menu-max-height: 250px;
+  --media-menu-min-width: 220px;
+  --media-menu-padding: 12px;
+  --media-menu-top-bar-bg: rgb(10 10 10 / 0.6);
+  --media-menu-icon-rotate-deg: 90deg;
+
+  --media-sm-menu-landscape-max-height: min(70vh, 400px);
+  --media-sm-menu-portrait-max-height: 40vh;
+
+  /* Theme. */
+  --media-menu-color-gray-50: rgb(245 245 245 / 0.1);
+  --media-menu-color-gray-100: rgb(245 245 245 / 0.45);
+  --media-menu-color-gray-200: rgb(10 10 10 / 0.6);
+  --media-menu-color-gray-300: rgb(27 27 27);
+
+  /* Text. */
+  --media-menu-text-color: #f5f5f5;
+  --media-menu-text-secondary-color: #6b6b6b;
+
+  /* Animation. */
+  --media-menu-enter-animation: vds-menu-enter 0.3s ease-out;
+  --media-menu-exit-animation: vds-menu-exit 0.2s ease-out;
+
+  /* Scrollbar. */
+  --media-menu-scrollbar-track-bg: transparent;
+  --media-menu-scrollbar-thumb-bg: var(--color-gray-50);
+
+  /* Section. */
+  --media-menu-section-bg: var(--color-gray-300);
+  --media-menu-section-border: unset;
+  --media-menu-section-divider: var(--divider);
+  --media-menu-section-header-font-size: 12px;
+  --media-menu-section-header-font-weight: 500;
+  --media-menu-section-gap: 8px;
+  --media-menu-section-border-radius: 2px;
+
+  /* Item. */
+  --media-menu-item-bg: transparent;
+  --media-menu-item-border-radius: 2px;
+  --media-menu-item-border: 0;
+  --media-menu-item-height: 40px;
+  --media-menu-item-hover-bg: var(--color-gray-50);
+  --media-menu-item-icon-size: 18px;
+  --media-menu-item-icon-spacing: 6px;
+  --media-menu-item-padding: 10px;
+
+  /* Radio. */
+  --media-menu-radio-icon-color: var(--text-color);
+
+  /* Checkbox. */
+  --media-menu-checkbox-width: 40px;
+  --media-menu-checkbox-height: 18px;
+  --media-menu-checkbox-bg-active: #1ba13f;
+  --media-menu-checkbox-bg: var(--color-gray-100);
+  --media-menu-checkbox-handle-bg: #f5f5f5;
+  --media-menu-checkbox-handle-border: unset;
+  --media-menu-checkbox-handle-diameter: calc(var(--checkbox-height) - 2px);
+
+  /* Slider. */
+  --media-menu-slider-height: 32px;
+  --media-menu-slider-track-bg: var(--color-gray-50);
+  --media-menu-slider-track-fill-bg: var(--color-inverse);
+
+  /* Hint. */
+  --media-menu-hint-color: var(--text-secondary-color);
+  --media-menu-hint-font-size: 13px;
+  --media-menu-hint-font-weight: 400;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Quality sub menu */
+
+
+
+
+
+
+/* ==========================================================================
+   CẤU HÌNH KHỐI SIDEBAR CHÍNH (MẶC ĐỊNH BỊ GIẤU ĐI)
+   ========================================================================== */
+.sidebar-panel {
+  /* Bố cục & Định vị (Layout & Positioning) */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 270px;
+  /* Chiều rộng mặc định cho mobile */
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  /* Màu nền & Đường viền (Background & Borders) */
+  background-color: rgba(12, 12, 14, 0.95);
+  /* bg-[#0c0c0e]/95 */
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  /* border-l border-white/5 */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  /* shadow-2xl */
+  /* Hiệu ứng chuyển động (Animation & Transitions) */
+  transform: translateX(100%);
+  /* translate-x-full - mặc định ẩn về bên phải */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* transition-transform duration-300 ease-in-out */
+  /* Định dạng chữ & Trải nghiệm người dùng (Typography & UX) */
+  font-family: sans-serif;
+  /* font-sans */
+  color: #ffffff;
+  /* text-white */
+  user-select: none;
+  /* select-none */
+  pointer-events: auto;
+  /* pointer-events-auto */
+  overflow: hidden;
+}
+
+/* sm:w-[320px] - Phóng to chiều rộng trên màn hình từ 640px trở lên */
+@media (min-width: 640px) {
+  .sidebar-panel {
+    width: 270px;
+  }
+}
+
+/* peer-checked/sidebar:!translate-x-0 */
+/* Khi thẻ input checkbox đóng vai trò kích hoạt sidebar được tích chọn (checked) */
+.peer-sidebar:checked~.sidebar-panel,
+input[id*="sidebar"]:checked~.sidebar-panel,
+input[class*="sidebar"]:checked~.sidebar-panel {
+  transform: translateX(0) !important;
+}
+
+/* Thêm class này để tương ứng với thuộc tính 'hidden' của Tailwind */
+.hidden {
+  display: none !important;
+}
+
+.sidebar-overlay {
+  /* Định vị phủ kín toàn màn hình (absolute inset-0 z-40) */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  inset: 0;
+  z-index: 40;
+  /* Nằm dưới Sidebar (z-50) nhưng nằm trên video */
+
+  /* Màu nền & Trải nghiệm (bg-black/60 cursor-pointer) */
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Đen mờ 60% */
+  cursor: pointer;
+
+  /* Trạng thái mặc định là ẨN (opacity-0 pointer-events-none) */
+  opacity: 0;
+  pointer-events: none;
+  /* Không chặn click vào video khi đang ẩn */
+
+  /* Hiệu ứng mượt mà (transition-opacity duration-300 ease-in-out) */
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* peer-checked/sidebar:!opacity-100 peer-checked/sidebar:!pointer-events-auto */
+/* Khi checkbox kích hoạt sidebar được tích chọn -> Hiển thị màn phủ lên */
+.peer-sidebar:checked~.sidebar-overlay,
+input[id*="sidebar"]:checked~.sidebar-overlay,
+input[class*="sidebar"]:checked~.sidebar-overlay {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  /* Kích hoạt lại chuột để người dùng có thể click vào overlay nhằm đóng sidebar */
+}
+
+.sidebar-header {
+  /* Khung hộp linh hoạt và căn chỉnh (flex items-center justify-between) */
+  display: flex;
+  align-items: center;
+  /* Căn giữa các phần tử theo chiều dọc */
+  justify-content: space-between;
+  /* Đẩy tiêu đề sang trái, nút đóng sang phải */
+  /* Khoảng cách đệm bên trong (px-4 pt-5 pb-3) */
+  padding: 11px 13px;
+  /* pb-3 */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-title {
+  color: #fff;
+  font-weight: 700;
+  /* font-bold */
+  font-size: 13px;
+  /* text-base (mặc định của hầu hết trình duyệt) */
+  letter-spacing: 0.025em;
+  /* tracking-wide */
+  font-family: sans-serif;
+  /* font-sans */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.sidebar-close-btn {
+  /* Kích thước khung (w-7 h-7) */
+  width: 28px;
+  /* 7 * 4px */
+  height: 28px;
+  /* 7 * 4px */
+
+  /* Căn giữa icon bên trong (flex items-center justify-center) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Bo tròn & Trải nghiệm (rounded-full cursor-pointer text-sm) */
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 14px;
+  /* text-sm */
+
+  /* Màu sắc mặc định (text-white/60) */
+  color: rgba(255, 255, 255, 0.6);
+
+  /* Hiệu ứng mượt mà khi thay đổi màu (transition-colors) */
+  transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Các trạng thái khi di chuột vào (hover:bg-white/10 hover:text-white) */
+.sidebar-close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  /* bg-white/10 */
+  color: #ffffff;
+  /* text-white */
+}
+
+/* --- Khung bọc lớn (dropdown-container) --- */
+.dropdown-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 7px 13px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  /* border-b border-white/5 */
+  flex-shrink: 0;
+}
+
+/* --- Dropdown 1: Thẻ bọc vị trí (relative flex-1) --- */
+.dropdown-season-wrapper {
+  position: relative;
+  /* relative */
+  flex: 1 1 0%;
+  /* flex-1 */
+}
+
+/* --- Thẻ input quản lý trạng thái (peer/season hidden) --- */
+.peer-season-toggle {
+  display: none !important;
+  /* hidden */
+}
+
+/* --- Nút bấm Phần Chính (label làm trigger button) --- */
+.dropdown-season-btn {
+  display: flex;
+  /* flex */
+  align-items: center;
+  /* items-center */
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* bg-[#1c1c22] */
+  padding: 4px 8px;
+  /* px-2.5 py-2.5 (2.5 * 4px = 10px) */
+  border-radius: 5px;
+  /* rounded */
+  font-size: 11px !important;
+  /* !text-xl (1.25rem = 20px) */
+  font-weight: 600;
+  /* font-medium */
+  color: rgba(255, 255, 255, 0.85);
+  /* text-[#d5d5d6] */
+  cursor: pointer;
+  /* cursor-pointer */
+  user-select: none;
+  /* select-none */
+  white-space: nowrap;
+  transition: background 150ms;
+  margin-bottom: 0;
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* Hiệu ứng di chuột nút bấm chính (hover:bg-[#25252d]) */
+.dropdown-season-btn:hover {
+  background-color: #25252d;
+}
+
+/* Biểu tượng nội dung chữ bên trái nút bấm (flex items-center gap-1) */
+.dropdown-season-btn .btn-content {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  /* gap-1 */
+}
+
+/* --- Biểu tượng mũi tên ▼ (text-[9px] opacity-50 transition-transform duration-200) --- */
+.dropdown-season-btn .arrow-icon {
+  font-size: 9px;
+  /* text-[9px] */
+  opacity: 0.5;
+  /* opacity-50 */
+  transition: transform 0.2s ease-in-out;
+  /* transition-transform duration-200 */
+}
+
+/* peer-checked/[season]:rotate-180 -> Xoay mũi tên khi click mở menu */
+.peer-season-toggle:checked+.dropdown-season-btn .arrow-icon {
+  transform: rotate(180deg);
+}
+
+/* --- Hộp danh mục đổ xuống (Dropdown Menu List) --- */
+.dropdown-season-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: rgba(18, 18, 24, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  min-width: 120px;
+  max-height: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  z-index: 10;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+
+  /* Trạng thái ẩn và hiệu ứng thu nhỏ (invisible opacity-0 scale-95 origin-top transition-all duration-150) */
+  visibility: hidden;
+  /* invisible */
+  opacity: 0;
+  /* opacity-0 */
+  transform: scale(0.95);
+  /* scale-95 */
+  transform-origin: top;
+  /* origin-top */
+  transition: all 0.15s ease-in-out;
+  /* transition-all duration-150 */
+}
+
+/* KÍCH HOẠT HIỂN THỊ MENU KHI CLICK (peer-checked/[season]:!visible peer-checked/season:opacity-100 peer-checked/season:scale-100) */
+.peer-season-toggle:checked~.dropdown-season-menu {
+  visibility: visible !important;
+  /* !visible */
+  opacity: 1 !important;
+  /* opacity-100 */
+  transform: scale(1) !important;
+  /* scale-100 */
+}
+
+/* --- Thẻ Option Đang chọn (Phần Chính) --- */
+.dropdown-season-item-active {
+  color: #ff7a00 !important;
+  font-weight: 700;
+  display: block;
+  padding: 7px 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.12s;
+}
+
+/* --- Thẻ Option Thường (Movie Thần Lâm Chi Chiến) --- */
+.dropdown-season-item {
+  display: block;
+  padding: 7px 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.12s;
+}
+
+/* Hiệu ứng di chuột qua các lựa chọn thường (hover:bg-white/10) */
+.dropdown-season-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+
+/* Player css */
+/* --- CSS thuần thay thế cho Tailwind của MediaPlayer --- */
+.vds-custom-player {
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  background-color: #000 !important;
+  color: #fff !important;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  overflow: hidden !important;
+  border-radius: 0.375rem !important;
+}
+
+/* DÁN ĐOẠN SỬA LỖI VÀO NGAY ĐÂY */
+/* ==========================================================================
+   EXPERT FIX: ĐỒNG BỘ KHUNG MEDIA PROVIDER (SỬA LỖI TỶ LỆ & GIỮ NGUYÊN GESTURE)
+   ========================================================================== */
+
+/* Ép thẻ provider trung gian co gọn khít 100% theo chiều cao 16:9 của player, triệt tiêu biến lỗi 820px */
+.vds-custom-player [data-media-provider] {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  display: block !important;
+}
+
+/* Khống chế video hiển thị đúng tỷ lệ lọt lòng, không dùng absolute để tránh đè chết lớp cảm ứng Gesture */
+.vds-custom-player video {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  display: block !important;
+  object-fit: contain !important;
+}
+
+
+/* Hiệu ứng viền ring khi focus (data-[focus]:ring-4) */
+.vds-custom-player[data-focus] {
+  outline: none !important;
+  box-shadow: 0 0 0 4px var(--ring-media-focus, #3b82f6) !important;
+}
+
+/* --- CSS thuần thay thế cho Tailwind của Poster --- */
+.vds-custom-poster {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  height: 100% !important;
+  width: 100% !important;
+  border-radius: 0.375rem !important;
+  opacity: 0 !important;
+  transition: opacity 0.15s ease !important;
+  object-fit: cover !important;
+}
+
+/* Trạng thái hiển thị Poster (data-[visible]:opacity-100) */
+.vds-custom-poster[data-visible] {
+  opacity: 1 !important;
+}
+
+/* Video Layout css */
+.vds-custom-gesture {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  display: block !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.vds-gesture-seek-back {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  display: block !important;
+  height: 100% !important;
+  width: 20% !important;
+  /* w-1/5 tương đương chính xác 20% */
+}
+
+.vds-gesture-seek-forward {
+  position: absolute !important;
+  right: 0 !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  display: block !important;
+  height: 100% !important;
+  width: 20% !important;
+  /* w-1/5 tương đương chính xác 20% */
+}
+
+/* ==========================================================================
+   HỆ THỐNG MÃ BĂM CSS THUẦN THAY THẾ HOÀN TOÀN CHO TAILWIND CỦA BẠN
+   ========================================================================== */
+.vds-g-p8s2 {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.vds-g-b1m0 {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  display: block !important;
+  height: 100% !important;
+  width: 20% !important;
+}
+
+.vds-g-f4k9 {
+  position: absolute !important;
+  right: 0 !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  display: block !important;
+  height: 100% !important;
+  width: 20% !important;
+}
+
+.vds-ep-list {
+  flex: 1 1 0%;
+  overflow-y: auto;
+  min-height: 0;
+  padding: 4px 0;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vds-ep-list>div+div {
+  margin-top: 0.5rem !important;
+}
+
+.vds-ep-text {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 13px !important;
+  line-height: 1.3;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .vds-ep-text {
+    font-size: 12px !important;
+  }
+}
+
+.vds-c-root {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 20 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  width: 100% !important;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.6) 100%) !important;
+  opacity: 0 !important;
+  transition: opacity 300ms ease !important;
+  pointer-events: none !important;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
+.vds-c-root[data-visible] {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.vds-t-bar {
+  display: flex !important;
+  width: 100% !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 1rem 1rem 0 1rem !important;
+  color: #fff !important;
+}
+
+.vds-t-title {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07)) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.06)) !important;
+  user-select: none !important;
+  opacity: 0.9 !important;
+}
+
+.vds-e-btn {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.375rem !important;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  padding: 0.375rem 0.75rem !important;
+  border-radius: 0.375rem !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.vds-e-btn:hover {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  color: #ff9a9a !important;
+}
+
+.vds-f-spacer {
+  flex: 1 1 0% !important;
+}
+
+.vds-b-wrapper {
+  width: 100% !important;
+  padding: 0 1rem 1rem 1rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.25rem !important;
+}
+
+.vds-s-container {
+  width: 100% !important;
+  display: block !important;
+  /* Đảm bảo chiếm trọn một hàng độc lập */
+  flex-shrink: 0 !important;
+  /* Không cho phép bất kỳ phần tử nào chèn ép */
+  pointer-events: auto !important;
+}
+
+.vds-t-slider {
+  max-width: 100% !important;
+  width: 100% !important;
+  display: flex !important;
+  /* Phục vụ cấu trúc track bên trong của Vidstack */
+  flex: 1 1 auto !important;
+}
+
+.vds-b-bar {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  pointer-events: auto !important;
+  margin-top: -0.25rem !important;
+}
+
+.vds-g-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+/* MĂ BĂM TOOLTIP CHÍNH */
+.vds-t-k4m2 {
+  z-index: 50 !important;
+  border-radius: 0.125rem !important;
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  padding: 0.125rem 0.5rem !important;
+  font-size: 1.5rem !important;
+  font-weight: 500 !important;
+  color: #fff !important;
+  animation: vds-f-out 150ms cubic-bezier(0.4, 0, 1, 1) forwards, vds-sl-out 150ms cubic-bezier(0.4, 0, 1, 1) forwards !important;
+}
+
+.vds-t-k4m2[data-visible] {
+  animation: vds-f-in 150ms cubic-bezier(0, 0, 0.2, 1) forwards, vds-sl-in 150ms cubic-bezier(0, 0, 0.2, 1) forwards !important;
+}
+
+[data-open] .vds-t-k4m2,
+:host([data-open]) .vds-t-k4m2 {
+  display: none !important;
+}
+
+/* MĂ BĂM BONG BÓNG CHỮ PHỤ CỦA MUTEBUTTON */
+.vds-m-tooltip {
+  z-index: 50 !important;
+  border-radius: 0.125rem !important;
+  background-color: rgba(0, 0, 0, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 0.25rem 0.5rem !important;
+  font-size: 0.65rem !important;
+  font-weight: 500 !important;
+  color: #fff !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  pointer-events: none !important;
+  margin-bottom: 0.5rem !important;
+  font-family: ui-sans-serif, system-ui, sans-serif !important;
+  animation: vds-f-out 150ms cubic-bezier(0.4, 0, 1, 1) forwards, vds-sl-out 150ms cubic-bezier(0.4, 0, 1, 1) forwards !important;
+}
+
+.vds-m-tooltip[data-visible] {
+  animation: vds-f-in 150ms cubic-bezier(0, 0, 0.2, 1) forwards, vds-sl-in 150ms cubic-bezier(0, 0, 0.2, 1) forwards !important;
+}
+
+[data-open] .vds-m-tooltip,
+:host([data-open]) .vds-m-tooltip {
+  display: none !important;
+}
+
+/* MĂ BĂM MENU CÀI ĐẶT TỔNG */
+.vds-m-q9z5 {
+  display: flex !important;
+  flex-direction: column !important;
+  height: var(--menu-height) !important;
+  max-height: 400px !important;
+  width: 240px !important;
+  overflow-y: auto !important;
+  overscroll-behavior-y: contain !important;
+  border-radius: 0.375rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(0, 0, 0, 0.95) !important;
+  padding: 0.5rem !important;
+  font-family: ui-sans-serif, system-ui, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  outline: none !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  backdrop-filter: blur(4px) !important;
+  transition: height 300ms ease !important;
+  will-change: height !important;
+  animation: vds-m-f-out 150ms cubic-bezier(0.4, 0, 1, 1) forwards, vds-m-sl-out 150ms cubic-bezier(0.4, 0, 1, 1) forwards !important;
+}
+
+.vds-m-q9z5[data-open] {
+  animation: vds-m-f-in 150ms cubic-bezier(0, 0, 0.2, 1) forwards, vds-m-sl-in 150ms cubic-bezier(0, 0, 0.2, 1) forwards !important;
+}
+
+.vds-m-q9z5[data-resizing] {
+  overflow: hidden !important;
+}
+
+/* MĂ BĂM SUBMENU */
+.vds-s-w3n8 {
+  display: none !important;
+  width: 100% !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  outline: none !important;
+  transition: all 200ms ease !important;
+}
+
+.vds-s-w3n8[data-open] {
+  display: flex !important;
+}
+
+.vds-s-w3n8[data-keyboard] {
+  margin-top: 0.25rem !important;
+}
+
+/* MĂ BĂM SVG CHO ICON RỘNG 48PX TRONG CODE GỐC CỦA BẠN (ÉP CHUẨN MÀU VÀ TỶ LỆ TRÊN DEVTOOLS) */
+.vds-i-hash {
+  width: 3rem !important;
+  height: 3rem !important;
+  fill: currentColor !important;
+  color: #fff !important;
+}
+
+/* Hệ thống Keyframes Animation mượt mà */
+@keyframes vds-f-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vds-f-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vds-sl-in {
+  from {
+    transform: translateY(0.5rem);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes vds-sl-out {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(0.25rem);
+  }
+}
+
+@keyframes vds-m-f-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vds-m-f-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vds-m-sl-in {
+  from {
+    transform: translateY(0.5rem);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes vds-m-sl-out {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(0.25rem);
+  }
+}
+
+/* ĐÈ DUY NHẤT 1 CLASS NÀY ĐỂ BẺ GÃY MAX-WIDTH 72PX VÀ FIX LỖI CO RÚM */
+.media-slider.vds-t-slider {
+  width: 100% !important;
+  max-width: 100% !important;
+  /* Đè chết max-width: 72px của thư viện */
+  flex: 1 1 auto !important;
+  /* Ép thanh tua tự giãn chiếm hết hàng ngang */
+  margin: 0 !important;
+  /* Xóa margin mặc định gây lệch lề trái/phải */
+  /* Sửa lỗi co rúm track do dính width: max-content của preview */
+  contain: layout !important;
+}
+
+
+/* sibar list episodes */
+/* Container của từng mục tập phim */
+.ep-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* gap-3 */
+  padding: 6px 13px;
+  /* p-1.5 */
+  cursor: pointer;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* transition-all */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  /* border gốc để tránh giật khung hình */
+}
+
+/* Trạng thái khi tập phim đang được ACTIVE */
+.ep-item-active {
+  background: rgba(255, 122, 0, 0.15);
+  border-bottom-color: rgba(255, 122, 0, 0.1);
+}
+
+/* Trạng thái khi tập phim KHÔNG active */
+.ep-item-inactive {
+  background-color: transparent;
+  /* bg-transparent */
+  border-bottom-color: transparent;
+  /* border-transparent */
+  color: rgba(255, 255, 255, 0.7);
+  /* text-white/70 */
+}
+
+/* Hiệu ứng Hover cho tập phim KHÔNG active */
+.ep-item-inactive:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  /* hover:bg-white/5 */
+  color: #ffffff;
+  /* hover:text-white */
+}
+
+.ep-item-active .ep-thumbnail-container {
+  outline: 2px solid rgba(255, 122, 0, 0.7);
+}
+
+.ep-item-active .vds-ep-text {
+  color: #ff7a00;
+  font-weight: 600;
+}
+
+/* Khung chứa ảnh thumbnail */
+.ep-thumbnail-container {
+  position: relative;
+  /* relative */
+  width: 50px;
+  /* w-24 */
+  height: 30px;
+  /* h-14 */
+  background-color: #27272a;
+  /* bg-zinc-800 */
+  border-radius: 3px;
+  /* rounded */
+  overflow: hidden;
+  /* overflow-hidden */
+  flex-shrink: 0;
+  /* flex-shrink-0 */
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Ảnh thumbnail */
+.ep-thumbnail-img {
+  width: 100%;
+  /* w-full */
+  height: 100%;
+  /* h-full */
+  object-fit: cover;
+  /* object-cover */
+  opacity: 0.6;
+  /* opacity-60 */
+}
+
+/* Lớp phủ Overlay khi active */
+.ep-play-overlay {
+  position: absolute;
+  /* absolute */
+  inset: 0;
+  /* inset-0 */
+  display: flex;
+  /* flex */
+  align-items: center;
+  /* items-center */
+  justify-content: center;
+  /* justify-center */
+  background-color: rgba(0, 0, 0, 0.2);
+  /* bg-black/20 */
+}
+
+/* Icon nút Play */
+.ep-play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  color: #ff7a00;
+  font-size: 16px;
+}
+
+/* 1. Kích thước tổng thể của thanh cuộn */
+.vds-ep-list::-webkit-scrollbar {
+  width: 3px;
+  /* Độ rộng của thanh cuộn dọc */
+}
+
+/* 2. Phần nền bên dưới của thanh cuộn (Track) */
+.vds-ep-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 3. Cục cuộn di chuyển (Thumb) */
+.vds-ep-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 2px;
+}
+
+/* 4. Đổi màu thanh cuộn khi người dùng rê chuột vào */
+.vds-ep-list::-webkit-scrollbar-thumb:hover {
+  background: #c15e04;
+  /* Đổi sang màu cam cháy trùng với màu border thumbnail của bạn */
+}

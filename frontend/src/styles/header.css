@@ -1,0 +1,395 @@
+#header {
+    background: #1c1c1c !important;
+}
+
+#headwrap {
+    padding: 5px 0;
+    margin: 10px 0;
+}
+
+#headwrap .col-md-3.slogan {
+    margin-top: -5px;
+    padding: 0;
+}
+
+#header .site-title {
+    background-image: url(https://hoathinh3d.so/wp-content/uploads/2026/06/logo.webp);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    text-indent: -9999px;
+    margin: 0;
+    text-indent: -9999px;
+    /* background: url(assets/images/halim-dark-logo.png) no-repeat top left; */
+    background-size: contain;
+    height: 45px;
+    margin-top: -5px;
+    position: relative;
+}
+
+#header .site-title a {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.halim-search-form {
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.header-nav {
+    margin-right: 0;
+    position: relative;
+}
+
+#headwrap .form-group {
+    margin: 0;
+}
+
+.halim-search-form .header-nav .col-xs-12,
+.hh3d-search-anchor {
+    position: relative;
+    z-index: 1;
+}
+
+.halim-search-form .header-nav .col-xs-12,
+.hh3d-search-anchor {
+    position: relative;
+    z-index: 1;
+}
+
+.halim-search-form .form-control {
+    border: 1px solid #333 !important;
+}
+
+.input-group .form-control {
+    z-index: 0;
+}
+
+.halim-search-form .form-control {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: 1px solid #273e52;
+    color: #7aa6ce;
+    font-size: 13px;
+    line-height: 13px;
+    border-radius: 20px !important;
+    transition: .7s all;
+    padding: 10px 40px;
+    background: #12171b6e url(/img/search.svg) 5px 2px no-repeat;
+
+    color: #7aa6ce !important;
+    --bs-body-color: #7aa6ce !important;
+}
+
+.form-control {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.input-group.col-xs-12 input {
+    color: #999999 !important;
+    -webkit-text-fill-color: #999999 !important;
+    background-color: #12171b6e;
+}
+
+.mobile-icon-menu {
+    width: 100% !important;
+}
+
+#headwrap .nav-items {
+    flex-wrap: nowrap !important;
+    justify-content: flex-end;
+    align-items: stretch;
+}
+
+.flex {
+    display: flex;
+}
+
+#headwrap .nav-items a {
+    background-color: #2b2b2b !important;
+    border: 1px solid rgb(84 59 59 / 8%) !important;
+}
+
+#headwrap .nav-items a {
+    padding: 7px 12px 6px;
+    margin: 0px 2px;
+    font-size: 10px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background-color: #12171b;
+    border: 1px solid #404040;
+    border-radius: 6px;
+    color: #ccc;
+    position: relative;
+    text-decoration: none;
+    min-width: 56px;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+#headwrap .nav-items a>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+#headwrap .nav-items a:hover {
+    background-color: #1a2530;
+    border-color: #555;
+    color: #fff;
+}
+
+.material-icons-menu {
+    display: grid;
+    font-size: 12px;
+    text-align: center;
+}
+
+.material-icons-round1 {
+    font-family: "Material Icons Round";
+    font-weight: normal;
+    font-style: normal;
+    /* font-size: 24px; */
+    line-height: 1;
+    /* margin-right: 5px; */
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: "liga";
+    font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-menu {
+    display: grid;
+    font-size: 22px;
+    text-align: center;
+}
+
+.notice-pc {
+    color: #ccc;
+    display: block;
+    margin: 10px;
+    text-align: center;
+}
+
+.notice-pc span[color],
+.notice-mobile span[color] {
+    color: var(--color);
+}
+
+#header .navbar-container {
+    background: #1e1f21;
+    border-bottom: none;
+    box-shadow: none;
+}
+
+.main-navigation,
+.navbar-container {
+    background: #1e1f21 !important;
+}
+
+.navbar-container {
+    background: #12171b;
+    transition: .25s transform;
+    backface-visibility: hidden;
+    z-index: 9999;
+    -webkit-box-shadow: 0px 3px 14px -1px rgb(22, 29, 35);
+    -moz-box-shadow: 0px 3px 14px -1px rgb(22, 29, 35);
+    box-shadow: 0px 5px 10px -1px rgb(30 30 30);
+}
+
+.navbar-container>.container {
+    border-top: none;
+}
+
+.navbar-container .container {
+    padding: 0;
+}
+
+.main-navigation,
+.navbar-container {
+    background: #1e1f21 !important;
+}
+
+.navbar {
+    margin: 0;
+    min-height: 40px !important;
+}
+
+.main-navigation {
+    background: #12171b;
+    border: none;
+}
+
+.navbar {
+    min-height: 48px !important;
+    margin: 0;
+}
+
+.navbar-toggle,
+button.navbar-toggle.collapsed {
+    margin: 6px 0;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.navbar-toggle .icon-bar {
+    background-color: #e0e0e0;
+}
+
+.navbar-toggle .icon-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+}
+
+.btn-hamburger {
+    background: transparent !important; /* Xóa màu nền xám */
+    border: none !important;            /* Xóa đường viền nổi (inset/outset) */
+    box-shadow: none !important;        /* Xóa đổ bóng thô */
+    outline: none !important;           /* Xóa viền xanh khi nhấp chuột */
+    padding: 0 !important;              /* Xóa khoảng đệm thừa */
+    margin-right: 6px !important;
+    margin-left: 6px !important;
+    cursor: pointer;                    /* Biến con trỏ chuột thành hình bàn tay */
+    
+    /* Căn giữa tấm ảnh SVG bên trong nút */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Đề phòng ảnh SVG bị dính thuộc tính kéo dãn */
+.btn-hamburger img {
+    display: block;
+    object-fit: contain;
+}
+
+.navbar-toggle.pull-right.collapsed {
+    margin: 6px 0 2px;
+    padding: 9px;
+}
+button.navbar-toggle.expand-search-form {
+    padding: 10px 14px;
+}
+.navbar-toggle, button.navbar-toggle.collapsed {
+    margin: 6px 0;
+}
+
+.navbar-header {
+    /* Không hề có thuộc tính float nào ở chế độ mobile */
+    display: block; 
+    width: 100%; /* Hoặc tự động kéo dãn hết 100% chiều rộng của thẻ cha (container) */
+}
+
+.navbar-header:before{
+    content: " ";
+    display: table;
+}
+
+@media (min-width: 768px) {
+    .navbar-collapse.collapse {
+        display: block !important;
+        height: auto !important;
+        padding-bottom: 0;
+        overflow: visible !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-header {
+        float: left;
+    }
+}
+@media (max-width: 1200px) {
+    .navbar-header {
+        float: none;
+    }
+}
+@media (max-width: 1200px) {
+    .navbar-toggle {
+        display: block;
+    }
+}
+
+@media (max-width: 1200px) {
+    .navbar-toggle {
+        display: block;
+    }
+}
+
+@media (max-width: 1200px) {
+    .navbar-header {
+        float: none;
+    }
+}
+
+@media (max-width: 766px) {
+    .row.d-block.clearfix {
+        display: flex;
+        flex-direction: column !important;
+    }
+
+    .mobile-icon-menu {
+        clear: both;
+    }
+
+    #headwrap .nav-items.flex {
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    #headwrap .slogan {
+        float: none !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    #header .site-title {
+        /* Quan trọng 1: Đưa tấm ảnh nền vào giữa khung */
+        background-position: center center !important;
+
+        /* Quan trọng 2: Căn giữa chính cái khối div/p này ra giữa màn hình mobile */
+        margin-left: auto !important;
+        margin-right: auto !important;
+
+        /* Đảm bảo khối có chiều rộng nhất định để ảnh nền hiển thị (hoặc dùng width: 100%) */
+        width: 100% !important;
+        max-width: 300px;
+        /* Bạn có thể chỉnh lại số này bằng đúng chiều rộng thực tế của logo */
+
+        float: none !important;
+        /* Đảm bảo không bị dính float cũ */
+    }
+}
+
+@media (max-width: 1024px) {
+    #header .halim-search-form {
+        display: none;
+    }
+}

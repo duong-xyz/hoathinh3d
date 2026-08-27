@@ -1,0 +1,61 @@
+.box {
+    background-color: beige;
+    width: 100dvw;
+    height: 100dvh;
+}
+
+header {
+    /* display: flex; */
+    display: block;
+    background-color: #1c1c1c;
+}
+/* or display flow-root in parent to creating BFC for parent */
+header::before,
+header::after {
+    content: "";
+    display: table; 
+}
+header::after {
+    clear: both;
+    /* left no approve a float element on the left side of it then it is line break. If float on right side it approved - right is same */
+}
+
+.site-title {
+    background-image: url('/src/assets/logo.webp');
+    background-position: 0 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* flex-shrink: 0;
+    flex-basis: 25%; */
+}
+
+.site-title::before {
+  content: "";
+  display: block;
+  height: 45px; 
+}
+
+.search {
+    border: 1px solid #333 !important;
+}
+
+@media screen and (min-width: 768px) {
+    .site-title {
+        width: 50%;
+        float: left;
+    }
+    .search {
+        width: 50%;
+        float: left;
+    }
+}
+@media screen and (min-width: 992px) {
+    .site-title {
+        width: 25%;
+        float: left;
+    }
+    .search {
+        width: 41.66666667%;
+        float: left;
+    }
+}

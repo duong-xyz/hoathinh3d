@@ -9,6 +9,7 @@ import com.duonghd.app.repository.EpisodeRepository;
 import com.duonghd.app.repository.EpisodeSourceRepository;
 import com.duonghd.app.repository.MovieRepository;
 import com.duonghd.app.service.MovieService;
+import com.duonghd.app.util.ScheduleUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -102,8 +105,64 @@ public class MovieServiceImpl implements MovieService {
         if (request.ratingScore() != null) movie.setRatingScore(request.ratingScore());
         if (request.thumbnailUrl() != null) movie.setThumbnailUrl(request.thumbnailUrl());
         if (request.schedule() != null) movie.setSchedule(request.schedule());
+        if (request.description() != null) movie.setDescription(request.description());
 
         return mapToMovieResponseDto(movie);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<MovieResponseDto> searchMovies(String keyword, Pageable pageable) {
+        if(keyword == null || keyword.trim().isEmpty()) {
+            return movieRepository.findAll(pageable).map(this::mapToMovieResponseDto);
+        }
+        return movieRepository.searchMovies(keyword.trim(), pageable).map(this::mapToMovieResponseDto);
+    }
+
+    @Override
+    public ScheduleResponse getScheduleByDay(String day, Pageable pageable) {
+        int targetBit = ScheduleUtils.getBitForDay(day);
+        if (targetBit == 0) {
+            return new ScheduleResponse(Collections.emptyList(), Collections.emptyList());
+        }
+
+        List<Movie> allMovies = movieRepository.findAllByScheduleIsNotNull();
+
+        List<Movie> normal = new ArrayList<>();
+        List<Movie> early = new ArrayList<>();
+
+        for (Movie m : allMovies) {
+            String schedule = m.getSchedule();
+            if (schedule == null || !schedule.contains("|")) continue;
+
+            String[] parts = schedule.split("\\|", 3);
+            if (parts.length < 3) continue;
+
+            try {
+                int normalBitmask = Integer.parseInt(parts[1]);
+                int earlyBitmask = Integer.parseInt(parts[2]);
+                if ((normalBitmask & targetBit) != 0) normal.add(m);
+                if ((earlyBitmask & targetBit) != 0) early.add(m);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+
+        // paginate on RAM and mapping to dto
+        return new ScheduleResponse(
+                paginateAndMap(normal, pageable),
+                paginateAndMap(early, pageable)
+        );
+    }
+
+    private List<MovieResponseDto> paginateAndMap(List<Movie> list, Pageable pageable) {
+        int start = (int) pageable.getOffset();
+        if (start >= list.size()) return Collections.emptyList();
+
+        int end = Math.min(start + pageable.getPageSize(), list.size());
+
+        return list.subList(start, end).stream()
+                .map(this::mapToMovieResponseDto)
+                .toList();
     }
 
     private MovieResponseDto mapToMovieResponseDto(Movie movie) {

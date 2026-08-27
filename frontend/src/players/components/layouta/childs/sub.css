@@ -1,0 +1,252 @@
+/* ==========================================================================
+   1. CẤU TRÚC CUỘN VÀ ẨN HOÀN TOÀN SCROLLBAR
+   ========================================================================== */
+
+/* Giới hạn chiều cao tối đa của vùng chứa danh sách và bật cuộn ngầm */
+.vds-radio-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 240px;      /* Giới hạn chiều cao hiển thị khoảng 5-6 dòng */
+  overflow-y: auto;       /* Vẫn cho phép cuộn bằng chuột/tay */
+  scrollbar-width: none;  /* Ẩn scrollbar trên Firefox */
+  -ms-overflow-style: none; /* Ẩn scrollbar trên IE/Edge cũ */
+}
+
+/* Ẩn scrollbar trên các trình duyệt Webkit (Chrome, Safari, Edge mới, Opera) */
+.vds-radio-group::-webkit-scrollbar,
+.vds-submenu-content::-webkit-scrollbar,
+.media-menu::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Tắt hiển thị thanh cuộn mặc định của cấu trúc bao bọc từ Vidstack */
+.vds-submenu-content,
+.media-menu {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+
+/* ==========================================================================
+   2. CẤU TRÚC MENU PHỤ CHỨA NỘI DUNG (SỬA LỖI ĐÈ NÚT)
+   ========================================================================== */
+.vds-submenu-content {
+  display: none; /* Mặc định ẩn khi chưa kích hoạt */
+  width: 100%;
+  outline: none;
+}
+
+/* 
+   Khi menu phụ được MỞ [data-open]:
+   Biến nó thành một lớp phủ tuyệt đối để chiếm trọn khung hình và che các nút khác đi.
+*/
+.vds-submenu-root[data-open] > .vds-submenu-content {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0f0f0f; /* Đổi thành màu nền menu cài đặt tổng của bạn nếu cần */
+  z-index: 20;
+  border-radius: 4px;
+  padding: 6px;
+  box-sizing: border-box;
+  /* margin-top: 40px; */
+}
+
+/* Đảm bảo danh sách tùy chọn bám sát luồng của hộp phủ */
+.vds-submenu-root[data-open] .vds-radio-group  {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 40px;
+}
+
+
+/* ==========================================================================
+   3. TỪNG DÒNG LỰA CHỌN TRONG MENU (RADIO ITEM)
+   ========================================================================== */
+.vds-radio-item {
+  position: relative;
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 4px;
+  padding: 10px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* Hiệu ứng di chuột hoặc chọn bằng phím */
+.vds-radio-item[data-hocus] {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.vds-radio-item[data-focus]:focus-visible {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+
+/* ==========================================================================
+   4. XỬ LÝ ICON CHECK TRONG HÀNG LỰA CHỌN
+   ========================================================================== */
+.vds-icon-check {
+  display: none;
+  width: 16px;
+  height: 16px;
+  color: #ffffff;
+}
+
+.vds-icon-placeholder {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+/* Khi phần tử đó được active chọn */
+.vds-radio-item[data-checked] .vds-icon-check {
+  display: block;
+}
+
+.vds-radio-item[data-checked] .vds-icon-placeholder {
+  display: none;
+}
+
+.vds-radio-label {
+  margin-left: 8px;
+  flex: 1;
+  text-align: left;
+  color: #ffffff;
+}
+
+
+/* ==========================================================================
+   5. THIẾT KẾ NÚT KÍCH HOẠT MENU PHỤ (SUBMENUBUTTON)
+   ========================================================================== */
+.vds-submenu-button {
+  left: 0;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+  color: #ffffff;
+  margin-bottom: 4px; /* Tạo khoảng cách nhỏ giữa các danh mục menu cha */
+}
+
+.vds-submenu-button[data-hocus] {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Ẩn hẳn nút nếu bị cấu hình disabled/aria-disabled */
+.vds-submenu-button[aria-disabled="true"] {
+  display: none;
+}
+
+
+/* ==========================================================================
+   6. LOGIC GIAO DIỆN NÚT KHI MENU ĐANG MỞ [data-open]
+   ========================================================================== */
+.vds-icon-left {
+  display: none; /* Mặc định ẩn nút quay lại */
+  width: 18px;
+  height: 18px;
+  margin-left: -2px;
+  margin-right: 6px;
+}
+
+.vds-icon-main-wrapper {
+  display: contents;
+}
+
+.vds-icon-main {
+  width: 20px;
+  height: 20px;
+}
+
+.vds-button-label {
+  margin-left: 6px;
+}
+
+.vds-button-hint {
+  margin-left: auto;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.vds-icon-right {
+  width: 18px;
+  height: 18px;
+  margin-left: 2px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 
+   Ghim chặt nút bấm làm thanh tiêu đề (Back Header) ở trên cùng khi mở menu con,
+   giúp tiệp màu với lớp nền tuyệt đối mới.
+*/
+.vds-submenu-root[data-open] .vds-submenu-button {
+  position: absolute;
+  top: 0 !important;
+  z-index: 25;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Đường kẻ phân cách nhẹ */
+  border-radius: 0;
+  margin-bottom: 6px;
+}
+
+.vds-submenu-root[data-open] .vds-icon-left {
+  display: block; /* Hiện mũi tên quay lại */
+}
+
+.vds-submenu-root[data-open] .vds-icon-main-wrapper,
+.vds-submenu-root[data-open] .vds-icon-right {
+  display: none; /* Ẩn icon chính & mũi tên phải đi */
+}
+
+.vds-submenu-root[data-open] .vds-button-label {
+  margin-left: 0; /* Căn lề thẳng hàng khi không có icon chính */
+}
+
+
+
+
+/* Tắt scrollbar trên chính đối tượng Menu Content (Thẻ cha bên ngoài) */
+.vds-submenu-content {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.vds-submenu-content::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* 2. Tắt scrollbar trên Menu Items tổng (Nếu Menu cha của bạn cũng bị dính) */
+.media-menu {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.media-menu::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}

@@ -1,11 +1,11 @@
 package com.duonghd.app.controller;
 
 import com.duonghd.app.dto.request.MovieCreateRequest;
+import com.duonghd.app.dto.request.MovieUpdateRequest;
 import com.duonghd.app.dto.response.MovieDetailResponseAdDto;
 import com.duonghd.app.dto.response.MovieDetailResponseDto;
 import com.duonghd.app.dto.response.MovieResponseDto;
-import com.duonghd.app.dto.response.WatchEpisodeResponseDto;
-import com.duonghd.app.model.Movie;
+import com.duonghd.app.dto.response.ScheduleResponse;
 import com.duonghd.app.service.MovieService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +43,15 @@ public class MovieController {
         return ResponseEntity.ok(movieService.getMovieByIdForAd(id));
     }
 
+    @GetMapping("/schedule")
+    public ResponseEntity<ScheduleResponse> getMovieSchedule(
+            @RequestParam(name = "day") String day,
+            @PageableDefault(size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        ScheduleResponse scheduleResponse = movieService.getScheduleByDay(day, pageable);
+        return ResponseEntity.ok(scheduleResponse);
+    }
+
     @PostMapping
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<MovieResponseDto> createMovie(@Valid @RequestBody MovieCreateRequest request) {
@@ -54,10 +63,30 @@ public class MovieController {
         return ResponseEntity.created(location).body(created);
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
+    public ResponseEntity<MovieResponseDto> updateMovie(
+            @PathVariable Long id,
+            @Valid @RequestBody MovieUpdateRequest request) {
+        MovieResponseDto updated = movieService.updateMovie(id, request);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(updated.id())
+                .toUri();
+        return ResponseEntity.created(location).body(updated);
+    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('SCOPE_ROLE_ADMIN')")
     public ResponseEntity<Void> deleteMovie(@PathVariable Long id) {
         movieService.deleteMovie(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<MovieResponseDto>> searchMovies(
+        @RequestParam(name = "q", required = false, defaultValue = "") String keyword,
+        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        return ResponseEntity.ok(movieService.searchMovies(keyword, pageable));
     }
 }

@@ -3,8 +3,8 @@ package com.duonghd.app.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "episodes")
@@ -21,5 +21,5 @@ public class Episode {
     private String title;
     @OneToMany(mappedBy = "episode", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<EpisodeSource> sources = new ArrayList<>();
+    private Set<EpisodeSource> sources = new LinkedHashSet<>();
 }

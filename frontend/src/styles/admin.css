@@ -1,0 +1,192 @@
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f6f8;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: #1e293b;
+  color: #fff;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-brand {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0 20px 20px;
+  border-bottom: 1px solid #334155;
+}
+
+.sidebar-nav {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.sidebar-nav li a {
+  display: block;
+  padding: 12px 20px;
+  color: #cbd5e1;
+  text-decoration: none;
+}
+
+.sidebar-nav li a:hover,
+.sidebar-nav li a.active {
+  background-color: #334155;
+  color: #fff;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  height: 60px;
+  background-color: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.btn-logout {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.content-body {
+  padding: 24px;
+}
+
+/* Movie Management Styles */
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background-color: #64748b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.table-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.data-table th {
+  background-color: #f8fafc;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.btn-link.danger {
+  color: #dc2626;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: #fff;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  width: 450px;
+  overflow-y: auto;
+  height: 90%;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
