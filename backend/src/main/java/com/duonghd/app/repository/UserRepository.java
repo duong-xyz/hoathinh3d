@@ -1,5 +1,6 @@
 package com.duonghd.app.repository;
 
+import com.duonghd.app.contant.Role;
 import com.duonghd.app.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,6 +13,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     boolean existsByUsername(String username);
+
+    boolean existByRole(Role role);
 
     boolean existsByEmail(String email);
     List<User> findByUsernameOrEmail(String username, String email);
