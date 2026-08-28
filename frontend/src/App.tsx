@@ -6,9 +6,8 @@ import { EpisodeManagement } from "./pages/EpisodeManagement"
 import { UserManagement } from "./pages/UserManagement"
 import { AdminCommentManagement } from "./pages/AdminCommentManagement"
 import { MovieDetailPage } from "./pages/MovieDetailPage"
-import Header from "./components/Header"
 import Home from "./pages/Home"
-import { Test } from "./components/Test"
+import { Test } from "./components/Header"
 import Detail from "./pages/Detail"
 import Watch from "./pages/Watch"
 import Schedule from "./pages/Schedule"
@@ -20,7 +19,6 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/movies/:id" element={<MovieDetailPage />} />
-        <Route path="/header" element={<Header />} />
         <Route path="/" element={<Home />} />
         <Route path="/test" element={<Test />} />
         <Route path="/schedule" element={<Schedule />} />
