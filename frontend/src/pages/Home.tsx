@@ -34,8 +34,9 @@ function Home() {
     try {
       const res = await movieApi.getAllMovies(page);
       setMovies(res.data);
+      console.log("movie list: ", res.data);
     } catch (err) {
-      console.log("Movies list can't be load from server");
+      console.log("Movies list can't be load from server:", err);
     } finally {
       setIsLoading(false);
     }
