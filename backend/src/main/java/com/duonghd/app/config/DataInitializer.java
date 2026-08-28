@@ -19,7 +19,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if(!userRepository.existByRole(Role.ADMIN)) {
+        if(!userRepository.existsByRole(Role.ADMIN)) {
             log.info("Creating admin user...");
             User admin = User.builder()
                     .username("admin")
