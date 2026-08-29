@@ -18,6 +18,8 @@ target/
 *.iws
 *.iml
 *.ipr
+# IntelliJ Build output
+out/
 
 ### NetBeans ###
 /nbproject/private/

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const axiosClient = axios.create({
   // baseURL: 'http://localhost:8080/api/v1',
-  baseURL: import.meta.env.VITE_API_BASE_URL || "https://hoathinh3d.onrender.com/api/v1",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://180.93.35.213:8080/api/v1",
   headers: {
     'Content-Type': 'application/json',
   },
