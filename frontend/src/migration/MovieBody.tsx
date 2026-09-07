@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ScheduleUtils } from '../utils/scheduleUtil'
 
 export interface EpisodeSummaryDto {
   id: number;
@@ -11,13 +12,15 @@ interface MovieBodyProps {
   serverName: string;
   serverId: number;
   des: string;
+  schedule?: string;
 }
 
 export default function MovieBody({
   episodes = [],
   serverName = "Việt Sub",
   serverId = 1,
-  des
+  des,
+  schedule,
 }: MovieBodyProps) {
   const [isAscending, setIsAscending] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -53,15 +56,15 @@ export default function MovieBody({
               Phần Chính
             </a>
           </li>
-          <li className="movies-part">
+          {/* <li className="movies-part">
             <a href="https://hoathinh3d.st-than-lam-chi-chien" className="" title="Movie Thần Lâm Chi Chiến">
               Movie Thần Lâm Chi Chiến
             </a>
-          </li>
+          </li> */}
         </ul>
       </nav>
 
-      <a href="/xem-phim-tien-nghich/tap-149-sv1.html" className="resume-watch-card">
+      {/* <a href="/xem-phim-tien-nghich/tap-149-sv1.html" className="resume-watch-card">
         <style>{'.info-v2-body .resume-watch-card { --info-accent-1: 0, 165, 165; }'}</style>
         <div className="resume-circle-wrap">
           <svg className="resume-circle-svg" viewBox="0 0 44 44">
@@ -86,11 +89,27 @@ export default function MovieBody({
           </span>
         </div>
         <span className="material-icons resume-watch-arrow">chevron_right</span>
-      </a>
+      </a> */}
 
       <p className="info-schedule">
         <style>{'.info-schedule { --info-accent-1: 0, 165, 165; }'}</style>
-        <i className="hl-calendar" /> Lịch chiếu vào trưa <a href="/lich-chieu/">Thứ 2</a>, chiếu sớm lúc <strong>18:00</strong> Chủ Nhật
+        <i className="hl-calendar" /> Lịch chiếu vào trưa&nbsp;
+        {(() => {
+          const res = ScheduleUtils.toHumanReadable2(schedule);
+          if (typeof res === 'string') {
+            return <a href="/schedule">{res}</a>;
+          }
+          return (
+            <>
+              <a href="/schedule">{res.normal}</a>
+              {res.early && (
+                <>
+                  , chiếu sớm lúc <strong>18:00</strong> {res.early.replace('Sớm: ', '')}
+                </>
+              )}
+            </>
+          );
+        })()}
       </p>
 
       <section className="info-block info-block--eps">

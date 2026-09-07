@@ -1,16 +1,16 @@
 import { startTransition, useEffect, useState } from "react";
 import SearchForm from "./SearchForm";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 export default function Header({ setIsMenuOpen, setIsSearchOpen, setIsModalOpen, isGenreOpen, setIsGenreOpen, setNoti }
     : {
-    setIsMenuOpen: any;
-    setIsSearchOpen: any;
-    setIsModalOpen: any;
-    isGenreOpen: any;
-    setIsGenreOpen: any;
-    setNoti?: any;
-}
+        setIsMenuOpen: any;
+        setIsSearchOpen: any;
+        setIsModalOpen: any;
+        isGenreOpen: any;
+        setIsGenreOpen: any;
+        setNoti?: any;
+    }
 ) {
 
     const [scrollState, setScrollState] = useState("top");
@@ -52,7 +52,7 @@ export default function Header({ setIsMenuOpen, setIsSearchOpen, setIsModalOpen,
         return "navbar-container";
     };
     const [accMenuId, setAccMenuId] = useState<number | boolean>(false);
-    const handleToggleAccMenu = (id:any) => {
+    const handleToggleAccMenu = (id: any) => {
         setAccMenuId(accMenuId === id ? null : id);
     };
     const handleToggleCollapse = () => {
@@ -60,6 +60,7 @@ export default function Header({ setIsMenuOpen, setIsSearchOpen, setIsModalOpen,
             setIsMenuOpen(true);
         });
     };
+    const { pathname } = useLocation();
     return (
         <header id="header">
             <div className="container">
@@ -97,10 +98,10 @@ export default function Header({ setIsMenuOpen, setIsSearchOpen, setIsModalOpen,
                             <a id="custom-open-login-modal"
                                 href="#"
                                 onClick={(e) => {
-                                    e.preventDefault(); 
-                                    setIsModalOpen(true); 
+                                    e.preventDefault();
+                                    setIsModalOpen(true);
                                 }}
-                                style={{ cursor: "pointer" }} 
+                                style={{ cursor: "pointer" }}
                             >
                                 <div>
 
@@ -395,7 +396,7 @@ export default function Header({ setIsMenuOpen, setIsSearchOpen, setIsModalOpen,
                             <hr />
                             <li>
 
-                                <a href="/cai-dat-tai-khoan" onClick={(e) => {e.preventDefault(); navigate("/account-setting")}}>
+                                <a href="/cai-dat-tai-khoan" onClick={(e) => { e.preventDefault(); navigate("/account-setting") }}>
                                     <div className="icon">
                                         <span className="material-icons">account_box</span>
                                     </div>
@@ -816,21 +817,23 @@ export default function Header({ setIsMenuOpen, setIsSearchOpen, setIsModalOpen,
                             <div className="collapse navbar-collapse" id="halim">
                                 <div className="menu-menu-container">
                                     <ul id="menu-menu" className="nav navbar-nav navbar-left">
-                                        <li className="hh3d-mi mi-home hh3d-mi-active">
+                                        <li
+                                            className={`hh3d-mi mi-home ${pathname === "/" ? "hh3d-mi-active" : ""}`}
+                                        >
                                             <a title="&ensp;Trang chủ"
                                                 onClick={(e) => { e.preventDefault(); navigate("/") }}
                                                 href="#"
                                             >
-                                            &ensp;Trang chủ
+                                                &ensp;Trang chủ
                                             </a>
                                         </li>
-                                        <li className="hh3d-mi mi-schedule">
+                                        <li className={`hh3d-mi mi-schedule ${pathname === "/schedule" ? "hh3d-mi-active" : ""}`}>
                                             <a
                                                 title="&ensp;Lịch Chiếu"
                                                 href="#"
                                                 onClick={(e) => { e.preventDefault(); navigate("/schedule") }}
                                             >
-                                            &ensp;Lịch Chiếu
+                                                &ensp;Lịch Chiếu
                                             </a>
                                         </li>
                                     </ul>

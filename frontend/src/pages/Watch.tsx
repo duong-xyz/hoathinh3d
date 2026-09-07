@@ -9,7 +9,7 @@ import { Player } from '../players/Player'
 import watchStyles from '../../public/css/watch.css?raw'
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { movieApi } from '../api/movieApi';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { setCurrentEpId, setPlaylist } from '../store/slices/EpListSlice';
 import { episodeApi } from '../api/episodeApi';
 import type { WatchEpisodeResponseDto } from '../types/episode';
@@ -527,7 +527,7 @@ export default function Watch() {
                                     <div className="clearfix" />
                                     <div className="clearfix" />
                                     <div className="clearfix" />
-                                    <MovieWatchPanel initialEpisodes={episodes} movieId={movieId!} epId={epId!} />
+                                    <MovieWatchPanel initialEpisodes={episodes} movieId={movieId!} epId={epId!}/>
 
                                     <section
                                         className="title-block watch-page watch-page-v2 ah-frame-bg"
@@ -538,15 +538,15 @@ export default function Watch() {
                                                 <p className="watch-page-v2__title">
                                                     {watch && watch.movieTitle}
                                                 </p>
-                                                <a
-                                                    href="https://hoathinh3d.st/tram-than-pham-tran-than-vuc-phan-2#info-story"
+                                                <Link
+                                                    to={`/detail/${movieId}`}
                                                     className="watch-page-v2__info-link"
                                                     title="Xem nội dung phim trên trang thông tin"
                                                 >
 
                                                     <i className="fa fa-info-circle" aria-hidden="true" />
                                                     <span>Xem thông tin phim</span>
-                                                </a>
+                                                </Link>
                                             </div>
                                             <div className="watch-page-v2__rating-col">
                                                 <div className="halim-rating-container">
@@ -590,32 +590,12 @@ export default function Watch() {
                             <section className="related-movies" />
                             <div id="the_tag_list" className="the_tag_list item-tags">
                                 <a
-                                    href="https://hoathinh3d.st/tag/pham-tran-than-vuc-2"
-                                    title="Phàm Trần Thần Vực 2"
+                                    href="#"
+                                    title={watch?.movieTitle}
                                     rel="tag"
+                                    onClick={e => e.preventDefault()}
                                 >
-                                    Phàm Trần Thần Vực 2
-                                </a>
-                                <a
-                                    href="https://hoathinh3d.st/tag/tram-than-2"
-                                    title="Trảm Thần 2"
-                                    rel="tag"
-                                >
-                                    Trảm Thần 2
-                                </a>
-                                <a
-                                    href="https://hoathinh3d.st/tag/tram-than-pham-tran-than-vuc-phan-2"
-                                    title="Trảm Thần Phàm Trần Thần Vực Phần 2"
-                                    rel="tag"
-                                >
-                                    Trảm Thần Phàm Trần Thần Vực Phần 2
-                                </a>
-                                <a
-                                    href="https://hoathinh3d.st/tag/zhan-shen-2"
-                                    title="Zhan Shen 2"
-                                    rel="tag"
-                                >
-                                    Zhan Shen 2
+                                    {watch?.movieTitle}
                                 </a>
                             </div>
                             <div className="item-tags-toggle" style={{ display: "none" }}>

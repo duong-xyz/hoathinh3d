@@ -133,7 +133,7 @@ export default function Schedule() {
                                                 </div>
                                                 <div className="lc-schedule-items" style={{ gridTemplateColumns: "1fr 1fr" }}>
                                                     {earlyMovies.map((movie) => (
-                                                        <Link key={movie.id} to={`/movies/${movie.id}`} className="lc-schedule-item">
+                                                        <Link key={movie.id} to={`/detail/${movie.id}`} className="lc-schedule-item">
                                                             <img
                                                                 src={movie.thumbnailUrl || '/placeholder.png'}
                                                                 alt={movie.title}
@@ -167,7 +167,7 @@ export default function Schedule() {
                                             {normalMovies.length > 0 ? (
                                                 <div className="lc-schedule-grid" id="scheduleGrid">
                                                     {normalMovies.map((movie) => (
-                                                        <Link key={movie.id} to={`/movies/${movie.id}`} className="lc-schedule-item">
+                                                        <Link key={movie.id} to={`/detail/${movie.id}`} className="lc-schedule-item">
                                                             <img
                                                                 src={movie.thumbnailUrl || '/placeholder.png'}
                                                                 alt={movie.title}

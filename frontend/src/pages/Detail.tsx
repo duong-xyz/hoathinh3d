@@ -25,7 +25,7 @@ export default function Detail() {
     const [isRatingOpen, setIsRatingOpen] = useState(false);
 
     const handleSubmitRatingData = (score: number) => {
-        alert(`Đã nhận được đánh giá ${score} sao của bạn hệ thống!`);
+        // alert(`Đã nhận được đánh giá ${score} sao của bạn hệ thống!`);
         setIsRatingOpen(false);
     };
 
@@ -189,7 +189,7 @@ export default function Detail() {
                                     >
                                         <div className="info-v2-inner">
                                             {movie && <MovieHeader movie={movie} onRateClick={() => setIsRatingOpen(true)} />}
-                                            <MovieBody episodes={movie?.episodes ?? []} serverName='Vietsub' serverId={0} des={movie?.description || ""} />
+                                            <MovieBody episodes={movie?.episodes ?? []} serverName='Vietsub' serverId={0} des={movie?.description || ""} schedule={movie?.schedule} />
                                             <MovieRatingModal
                                                 isOpen={isRatingOpen}
                                                 onClose={() => setIsRatingOpen(false)}

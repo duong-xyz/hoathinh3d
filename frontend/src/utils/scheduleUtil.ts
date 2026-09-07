@@ -118,4 +118,29 @@ export class ScheduleUtils {
 
         return `${normalText}${earlyText} - ${time}`;
     }
+
+    static toHumanReadable2(scheduleStr?: string | null): {normal: string, early: string} | string {
+        if (!scheduleStr) return 'Chưa có lịch chiếu';
+
+        const { time, normalBitmask, earlyBitmask } = this.parse(scheduleStr);
+
+        // Lấy danh sách ngày chiếu chính
+        const normalDays = DAYS_CONFIG
+            .filter((day) => (normalBitmask & day.bit) !== 0)
+            .map((day) => day.label);
+
+        // Lấy danh sách ngày chiếu sớm
+        const earlyDays = DAYS_CONFIG
+            .filter((day) => (earlyBitmask & day.bit) !== 0)
+            .map((day) => day.label);
+
+        if (normalDays.length === 0 && earlyDays.length === 0) {
+            return `Chưa chọn ngày (${time})`;
+        }
+
+        const normalText = normalDays.length === 7 ? 'Mỗi ngày' : normalDays.join(', ');
+        const earlyText = earlyDays.length > 0 ? `Sớm: ${earlyDays.join(', ')}` : '';
+
+        return {normal: normalText, early: earlyText};
+    }
 }

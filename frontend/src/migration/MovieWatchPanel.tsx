@@ -15,13 +15,14 @@ interface MovieWatchPanelProps {
   initialEpisodes?: EpisodeSummaryDto[];
   movieId: string;
   epId: string;
+  schedule?: string;
 }
 
 const MovieWatchPanel: React.FC<MovieWatchPanelProps> = ({ initialEpisodes = [], movieId, epId }) => {
   // 1. Dữ liệu giả lập các phần phim
   const parts = [
-    { id: 1, name: 'Phần 1', url: 'https://hoathinh3d.st/tram-than-tram-than-chi-pham-tran-than-vuc', active: false },
-    { id: 2, name: 'Phần 2', url: 'https://hoathinh3d.st/tram-than-pham-tran-than-vuc-phan-2', active: true },
+    { id: 1, name: 'Phần 1', url: '#', active: true },
+    { id: 2, name: 'Phần 2', url: '#', active: false },
   ];
 
   // 2. State quản lý
@@ -75,6 +76,7 @@ const MovieWatchPanel: React.FC<MovieWatchPanelProps> = ({ initialEpisodes = [],
                   href={part.url}
                   className={part.active ? 'active' : ''}
                   title={part.name}
+                  onClick={e => e.preventDefault()}
                 >
                   {part.name}
                 </a>
@@ -84,10 +86,10 @@ const MovieWatchPanel: React.FC<MovieWatchPanelProps> = ({ initialEpisodes = [],
         </nav>
 
         {/* Thông tin lịch phát sóng */}
-        <p className="info-schedule">
+        {/* <p className="info-schedule">
           <i className="hl-calendar"></i> Lịch chiếu vào trưa{' '}
           <a href="/lich-chieu/">Thứ 5</a>, chiếu sớm lúc <strong>18:10</strong> Thứ 4
-        </p>
+        </p> */}
 
         {/* Vùng chọn tập phim chính */}
         <section className="info-block info-block--eps">

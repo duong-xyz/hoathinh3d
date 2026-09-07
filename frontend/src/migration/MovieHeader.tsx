@@ -63,7 +63,8 @@ console.log("detail:", movie);
       <div className="info-hero__poster">
 
         <a
-          href={movie?.originalTitle}
+          href="#"
+          onClick={e => e.preventDefault()}
           className="info-hero__poster-link info-watch-link watch-btn has-history"
           title="Xem tập mới nhất"
           data-has-history="true"
