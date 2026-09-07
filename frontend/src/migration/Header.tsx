@@ -112,7 +112,7 @@ export default function Header({ setIsMenuOpen, setIsSearchOpen, setIsModalOpen,
                                 </div>
                                 <span className="nav-label">Đăng nhập</span>
                             </a>
-                            <a href="/admin/" className="xc-nav-icon-btn">
+                            <a href="/admin" className="xc-nav-icon-btn">
                                 <div>
                                     <span className="material-icons-round1 material-icons-menu">
                                         groups
