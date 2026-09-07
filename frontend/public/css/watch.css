@@ -28634,7 +28634,7 @@ img:hover {
 #header .site-title {
     margin: 0;
     text-indent: -9999px;
-    background: url(/src/assets/logo.webp) no-repeat top left;
+    background: url(/logo.webp) no-repeat top left;
     background-size: contain;
     height: 45px;
     margin-top: -5px;
