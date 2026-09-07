@@ -762,13 +762,11 @@ export default function Header({ setIsMenuOpen, setIsSearchOpen, setIsModalOpen,
 
 
                 <div className="notice-pc">
-                    Lưu hoặc nhớ ngay link rút gọn
                     <b>
-                        <span color="#FFA500" style={{ fontSize: 17 }}>
-                            bit.ly/hh3d
+                        <span color="#FFA500" style={{ fontSize: 17, color: "#FFA500" }}>
+                            HLS Media Streaming Platform
                         </span>
-                    </b>
-                    để truy cập sẽ tự chuyển đến tên miền mới khi nhà mạng chặn
+                    </b> live demo
                 </div>
                 <div className="notice-mobile">
                     Lưu hoặc nhớ ngay link rút gọn
