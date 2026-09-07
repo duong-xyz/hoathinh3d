@@ -427,7 +427,7 @@ function Home() {
               </div>
             </div>
           </div>
-          <div className="badge-settings-float-button" onClick={() => navigate("/admin")}><i className="fas fa-cog"></i></div>
+          {/* <div className="badge-settings-float-button" onClick={() => navigate("/admin")}><i className="fas fa-cog"></i></div> */}
         </>
 
       </div>

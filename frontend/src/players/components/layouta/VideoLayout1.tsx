@@ -235,7 +235,7 @@ export const VideoLayout: React.FC<PlayerProps> = ({ watch }) => {
         {/* THANH TRÊN ĐỈNH CHỨA TIÊU ĐỀ PHIM VÀ NÚT DANH SÁCH TẬP */}
         <div className="vds-t-bar">
           <span className="vds-t-title">
-            {`${watch.episodeTitle}`} - {watch.movieTitle}
+            {`${watch.episodeTitle}`}
           </span>
 
           <label

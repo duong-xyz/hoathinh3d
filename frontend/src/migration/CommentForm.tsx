@@ -42,7 +42,7 @@ export interface CommentPayload {
   sectColorClass: string;
   avatarFrameClass: string;
   isReply: boolean;
-  
+
 }
 
 // Interface cho Props của CommentForm
@@ -159,11 +159,14 @@ const CommentForm: React.FC<any> = ({
 
               {/* Icon Sticker */}
               <div className="wpd-editor-buttons-right">
+                <style>{`#wpdcom .wpdiscuz-sticker-icon { width: 113px !important;white-space: nowrap;font-size: small;font-style: italic;}`}</style>
+
                 <span
                   onClick={handleCanSelectSticker}
-                  className="wpdiscuz-sticker-icon" 
+                  className="wpdiscuz-sticker-icon"
                   title="Stickers"
                 >
+                  Chọn stickers&nbsp;
                   <svg
                     width={22}
                     height={22}

@@ -66,9 +66,9 @@ export default function Header({ setIsMenuOpen, setIsSearchOpen, setIsModalOpen,
                 <div className="row" id="headwrap">
                     <div className="col-md-3 col-sm-6 slogan">
                         <p className="site-title">
-                            <a href="#" rel="home">
+                            <Link to="/" rel="home">
                                 Hoạt Hình Trung Quốc – Xem Hoạt Hình 3D Hay | HH3D
-                            </a>
+                            </Link>
                         </p>
                     </div>
                     <SearchForm />
